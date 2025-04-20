@@ -1,0 +1,83 @@
+{
+  "name": "ts-lm-connect",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patyukin/ts-lm-connect.git"
+  },
+  "displayName": "LM Studio Connect",
+  "description": "Connect to local LM Studio instance for AI assistance",
+  "version": "0.0.15",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:lm-studio-chat-view"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "lm-studio-chat",
+          "title": "LM Studio",
+          "icon": "$(comment-discussion)"
+        }
+      ]
+    },
+    "views": {
+      "lm-studio-chat": [
+        {
+          "type": "webview",
+          "id": "lm-studio-chat-view",
+          "name": "Chat",
+          "visibility": "visible"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "ts-lm-connect.ask",
+        "title": "Ask LM Studio"
+      }
+    ],
+    "configuration": {
+      "title": "LM Studio Connect",
+      "properties": {
+        "lmStudioConnect.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:1234",
+          "description": "URL для подключения к API LM Studio"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "clean": "rm -rf out *.vsix",
+    "build": "npm run clean && npm run compile",
+    "package": "vsce package --allow-missing-repository",
+    "build:all": "npm run build && npm run package",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^16.18.34",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.47.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}
